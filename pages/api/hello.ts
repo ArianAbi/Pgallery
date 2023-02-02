@@ -1,13 +1,19 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { createClient } from '@supabase/supabase-js'
 
-type Data = {
-  name: string
-}
+type Data = unknown
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  res.status(200).json({ name: 'John Doe' })
+
+  const dbUrl: any = process.env.dbUrl;
+  const dbSecret: any = process.env.dbSecret;
+
+  const supabase = createClient(dbUrl, dbSecret);
+
+
+  res.status(200).json("hi")
 }
