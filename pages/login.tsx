@@ -1,5 +1,6 @@
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { useState } from "react";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -9,11 +10,31 @@ export default function () {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const onFormSubmit = async (e: any) => {
+        e.preventDefault()
+
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
+            email: email,
+            password: password
+        })
+
+        if (error) {
+            console.log(`loggin failed , error : ${error}`);
+        }
+        else {
+            console.log(`welcome ${data.user?.email}`);
+        }
+
+    }
+
     return (
         <>
             <div className="h-screen flex flex-col items-center justify-center px-10">
 
-                <form className="shadow-md rounded-md w-full bg-white p-5 flex flex-col gap-6">
+                <form
+                    onSubmit={onFormSubmit}
+                    className="shadow-md rounded-md w-full bg-white p-5 flex flex-col gap-6"
+                >
                     {/* google */}
                     <button
                         className="relative w-full bg-white py-2 rounded-md outline outline-1 outline-gray-400"
@@ -39,8 +60,10 @@ export default function () {
                     {/* email */}
                     <input
                         className="py-2 px-3 rounded-md outline outline-1 outline-gray-400"
-                        type="email"
+                        type="text"
                         placeholder="email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
                     />
 
                     {/* password */}
@@ -48,6 +71,8 @@ export default function () {
                         className="py-2 px-3 rounded-md outline outline-1 outline-gray-400"
                         type="password"
                         placeholder="password"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
                     />
 
                     {/* login */}
