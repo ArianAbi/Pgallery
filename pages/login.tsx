@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function () {
+export default function Login() {
 
     const supabaseClient = useSupabaseClient();
     const [email, setEmail] = useState("");
