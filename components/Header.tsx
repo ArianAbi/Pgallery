@@ -8,7 +8,7 @@ export const Header = () => {
     const router = useRouter();
 
     if (router.pathname === loginRoute || router.pathname === signupRoute) {
-        return
+        return <></>
     }
     return (
         <>
