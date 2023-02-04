@@ -85,7 +85,7 @@ export default function Login() {
 
                     {/* signup */}
                     <span className="w-full text-center gap-2 text-sm">
-                        don't have an account&#8202;?&#8202;
+                        don&apos;t have an account ?
                         <Link
                             className="text-cyan-600"
                             href="/signup"
