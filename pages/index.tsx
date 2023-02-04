@@ -24,7 +24,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="h-screen w-screen bg-slate-700 flex flex-col items-center py-4 gap-4">
+      <div className="h-screen w-full bg-slate-700 flex flex-col items-center py-4 gap-4">
         <button
           className="bg-green-600 px-2 py-2 text-white font-semibold rounded-md"
           onClick={getUserName}

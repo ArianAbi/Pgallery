@@ -12,7 +12,7 @@ export const Header = () => {
     }
     return (
         <>
-            <header className="grid grid-cols-3 w-screen bg-slate-200 text-center p-3">
+            <header className="grid grid-cols-3 w-full bg-slate-200 text-center p-3">
                 <div className="text-left">
                     Menu
                 </div>
