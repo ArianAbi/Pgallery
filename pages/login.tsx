@@ -7,11 +7,18 @@ import Link from "next/link";
 export default function Login() {
 
     const supabaseClient = useSupabaseClient();
+    const router = useRouter();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+
     const onFormSubmit = async (e: any) => {
         e.preventDefault()
+        setLoading(true)
+        setError("");
 
         const { data, error } = await supabaseClient.auth.signInWithPassword({
             email: email,
@@ -19,12 +26,13 @@ export default function Login() {
         })
 
         if (error) {
-            console.log(`loggin failed , error : ${error}`);
-        }
-        else {
-            console.log(`welcome ${data.user?.email}`);
+            setError(error.message)
+            setLoading(false)
+            return;
         }
 
+        console.log(`welcome ${data.user?.email}`);
+        router.replace('/');
     }
 
     return (
@@ -76,12 +84,19 @@ export default function Login() {
                     />
 
                     {/* login */}
-                    <button
-                        className="w-full py-2 bg-emerald-600 text-white text-xl font-semibold rounded-md"
-                        type="submit"
-                    >
-                        Login
-                    </button>
+                    <div className="text-center">
+                        <button
+                            className={`w-full py-2 bg-emerald-600 text-white text-xl font-semibold rounded-md
+                            ${loading ? "animate-pulse" : ""}
+                            `}
+                            disabled={loading}
+                            type="submit"
+                        >
+                            {loading ? "loading..." : "Login"}
+                        </button>
+
+                        {error && <span className="text-sm italic text-red-600">{error}</span>}
+                    </div>
 
                     {/* signup */}
                     <span className="w-full text-center gap-2 text-sm">
