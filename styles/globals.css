@@ -4,10 +4,10 @@
 
 @layer components {
     #__next {
-        min-height: 100vh;
+        @apply flex flex-col min-h-screen;
     }
 
     body {
-        @apply bg-stone-100;
+        @apply bg-stone-100 min-h-screen bg-slate-700;
     }
 }
