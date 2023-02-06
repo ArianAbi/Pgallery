@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react"
+import { useSupabaseClient } from "@supabase/auth-helpers-react"
+
 interface Post {
     id: string,
     creator_id: string,
@@ -6,6 +9,18 @@ interface Post {
 }
 
 export const Post = ({ id, creator_id, title, date }: Post) => {
+
+    const supabaseClient = useSupabaseClient();
+    const [username, setUsername] = useState("");
+
+    useEffect(() => {
+        (async () => {
+            const { data } = await supabaseClient.from('users').select('user_name').eq('user_id', creator_id)
+
+            setUsername(data && data[0].user_name)
+        })()
+    }, [])
+
     return (
         <div
             key={id}
@@ -16,7 +31,7 @@ export const Post = ({ id, creator_id, title, date }: Post) => {
             </h2>
 
             <div className="flex flex-col gap-2 items-center pt-10">
-                <span>{creator_id}</span>
+                <span>{username}</span>
                 <span>{date}</span>
             </div>
         </div>
