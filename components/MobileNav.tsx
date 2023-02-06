@@ -1,6 +1,24 @@
 import Link from "next/link";
+import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useEffect, useState } from "react";
 
 export const MobileNav = () => {
+
+    const user = useUser();
+    const supabaseClient = useSupabaseClient();
+
+    const [username, setUsername] = useState("");
+
+    useEffect(() => {
+        (async () => {
+
+            const { data } = await supabaseClient.from('users').select('user_name').eq('user_id', user?.id)
+            const username = data && data[0].user_name;
+
+            setUsername(username)
+        })()
+    }, [])
+
     return (
         <>
             <div className="absolute bottom-0 left-0 w-full text-center h-[70px] bg-slate-600 text-white font-semibold
@@ -10,7 +28,7 @@ export const MobileNav = () => {
                 {/* home */}
                 <div className="bg-red-500 w-full h-full flex items-center justify-center">
 
-                    <Link href="/home">
+                    <Link href="/">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
                             className="w-7 h-7">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
@@ -22,10 +40,12 @@ export const MobileNav = () => {
                 {/* create */}
                 <div className="bg-green-500 w-full h-full flex items-center justify-center">
 
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
-                        className="w-7 h-7">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
+                    <Link href={`/${username}/create`}>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
+                            className="w-7 h-7">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </Link>
 
                 </div>
 
