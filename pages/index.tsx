@@ -1,45 +1,53 @@
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react"
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Post } from "@/components/Post";
+import { MobileNav } from "@/components/MobileNav";
 
 export default function Home() {
 
   const supabaseClient = useSupabaseClient();
   const userClient = useUser();
-  const [userName, setUserName] = useState("");
 
-  const getUserName = async () => {
+  const [postJsx, setPostJsx] = useState<JSX.Element[]>();
 
-    setUserName("Loading...")
+  //fetch posts
+  useEffect(() => {
+    (async () => {
 
-    const { data, error } = await supabaseClient.from('users').select('user_name').eq('user_id', userClient?.id)
+      const { data: posts, error } = await supabaseClient.from('posts').select('*')
 
-    if (error) {
-      console.log(error);
-      setUserName("")
-      return;
-    }
+      if (error) {
+        console.log(error);
+        return;
+      }
 
-    setUserName(data[0].user_name)
-  }
+      const renderdPosts = posts?.map(post => {
+        return (
+          <Post
+            id={post.id}
+            creator_id={post.creator_id}
+            title={post.title}
+            date={post.date}
+          />
+        )
+      })
+
+      setPostJsx(renderdPosts)
+
+    })()
+  }, [])
 
   return (
     <>
-      <div className="h-screen w-full bg-slate-700 flex flex-col items-center py-4 gap-4">
-        <button
-          className="bg-green-600 px-2 py-2 text-white font-semibold rounded-md"
-          onClick={getUserName}
-        >
-          Get User Name
-        </button>
+      <div className="w-full flex flex-col items-center py-4 px-6 gap-4">
 
-        {
-          userName === "" ?
-            <h1 className="text-white font-semibold">No UserName</h1>
-            :
-            <h1 className="text-white font-semibold">{userName}</h1>
-        }
+        {postJsx}
 
       </div>
+
+      {userClient &&
+        <MobileNav />
+      }
     </>
   )
 }
