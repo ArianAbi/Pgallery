@@ -9,11 +9,11 @@ export default function Home() {
   const userClient = useUser();
 
   const [postJsx, setPostJsx] = useState<JSX.Element[]>();
+  const [loading, setLoading] = useState(true);
 
   //fetch posts
   useEffect(() => {
     (async () => {
-
       const { data: posts, error } = await supabaseClient.from('posts').select('*')
 
       if (error) {
@@ -28,18 +28,25 @@ export default function Home() {
             creator_id={post.creator_id}
             title={post.title}
             date={post.date}
+            image_path={post.image_path}
+            key={post.id}
           />
         )
       })
 
       setPostJsx(renderdPosts)
+      setLoading(false)
 
     })()
-  }, [])
+  }, [userClient])
+
+  if (loading) {
+    return <div className="text-white">Loading...</div>
+  }
 
   return (
     <>
-      <div className="w-full flex flex-col items-center py-4 px-6 gap-4">
+      <div className="w-full grid grid-cols-2 text-center p-4 gap-2">
 
         {postJsx}
 

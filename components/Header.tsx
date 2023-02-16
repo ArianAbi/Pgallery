@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import Router, { useRouter } from "next/router"
+import Link from "next/link"
 
 export const Header = () => {
 
@@ -13,16 +14,18 @@ export const Header = () => {
     return (
         <>
             <header className="grid grid-cols-3 w-full bg-slate-200 text-center p-3">
-                <div className="text-left">
-                    Menu
+                <div className="text-xl font-bold text-left">
+                    <Link href="/">
+                        Logo
+                    </Link>
                 </div>
 
-                <div className="text-xl font-bold">
-                    Logo
+                <div className="">
+                    Search
                 </div>
 
                 <div className="text-right">
-                    <a href={loginRoute}>Profile</a>
+                    <a href={loginRoute}>Account</a>
                 </div>
             </header>
         </>
