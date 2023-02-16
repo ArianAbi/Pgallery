@@ -1,3 +1,4 @@
+import { MobileNav } from "@/components/MobileNav";
 import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react";
@@ -12,23 +13,41 @@ export default function CreatePost() {
 
     const [title, setTitle] = useState("");
 
+    const [file, setFile] = useState<File>();
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("");
 
     const onFormSubmit = async (e: any) => {
         e.preventDefault();
         setError("")
+        setLoading(true)
 
-        if (title === "") {
+        if (title === "" || file === undefined || user === null) {
             setError("please add title");
+            setLoading(false)
             return;
         }
 
+        //upload image
+        const { data: imageData, error } = await supabaseClient.storage
+            .from('posts')
+            .upload(user.id + '/', file)
+
+        if (error) {
+            console.log(error);
+            setLoading(false)
+            return
+        } else {
+            console.log(imageData);
+        }
+
+        //inset title
         try {
-            await supabaseClient.from('posts').insert({ title: title, creator_id: user?.id })
+            await supabaseClient.from('posts').insert({ title: title, creator_id: user.id, image_path: user.id + '/' + imageData.path })
         } catch (err) {
             console.log(err);
             setError(`${err}`);
+            setLoading(false)
             return;
         }
 
@@ -53,6 +72,16 @@ export default function CreatePost() {
                         onChange={e => setTitle(e.target.value)}
                     />
 
+                    <input
+                        type="file"
+                        accept=".png , .jpg"
+                        onChange={e => {
+                            if (e.target.files) {
+                                setFile(e.target.files[0])
+                            }
+                        }}
+                    />
+
                     {/* create */}
                     <div className="w-full text-center">
                         <button
@@ -62,13 +91,15 @@ export default function CreatePost() {
                             disabled={loading}
                             type="submit"
                         >
-                            {loading ? "loading..." : "Create"}
+                            {loading ? "uploading..." : "Create"}
                         </button>
 
                         {error && <span className="text-sm italic text-red-600">{error}</span>}
                     </div>
                 </form>
             </div>
+
+            {user && <MobileNav />}
         </>
     )
 }
