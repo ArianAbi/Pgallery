@@ -9,7 +9,11 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      boxShadow: {
+        "post": "inset 0px -140px 50px -100px #000000bc;",
+      }
+    },
   },
   plugins: [],
 }
