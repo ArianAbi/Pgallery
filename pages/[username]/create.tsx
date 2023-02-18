@@ -2,6 +2,7 @@ import { MobileNav } from "@/components/MobileNav";
 import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react";
+import { uuid } from "uuidv4";
 
 export default function CreatePost() {
 
@@ -31,7 +32,7 @@ export default function CreatePost() {
         //upload image
         const { data: imageData, error } = await supabaseClient.storage
             .from('posts')
-            .upload(user.id + '/', file)
+            .upload(user.id + '/' + uuid(), file)
 
         if (error) {
             console.log(error);
@@ -41,9 +42,11 @@ export default function CreatePost() {
             console.log(imageData);
         }
 
+        console.log(imageData);
+
         //inset title
         try {
-            await supabaseClient.from('posts').insert({ title: title, creator_id: user.id, image_path: user.id + '/' + imageData.path })
+            await supabaseClient.from('posts').insert({ title: title, creator_id: user.id, image_path: imageData.path })
         } catch (err) {
             console.log(err);
             setError(`${err}`);
