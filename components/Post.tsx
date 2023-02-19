@@ -49,7 +49,7 @@ export const Post = ({ id, creator_id, title, date, image_path }: Post) => {
                         src={image}
                         width={100}
                         height={100}
-                        quality={20}
+                        quality={50}
                     />
 
                 }
