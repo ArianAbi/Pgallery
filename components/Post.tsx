@@ -35,30 +35,25 @@ export const Post = ({ id, creator_id, title, date, image_path }: Post) => {
     }, [])
 
     return (
-        <Link href={`/post/${id}`}>
-            <div
-                // style={{ backgroundImage: `url(${image})` }}
-                className="w-full bg-cover bg-center aspect-square rounded-md flex flex-col justify-end items-center py-2 shadow-post relative overflow-hidden"
-            >
 
+        <div
+            className="w-full bg-cover bg-center aspect-square flex flex-col justify-end items-center py-2 relative overflow-hidden z-10"
+        >
+
+            <Link href={`/post/${id}`}>
                 {image &&
 
                     <Image
-                        className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] z-[-1] min-h-full min-w-full object-cover m-auto text-center"
+                        className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] z-0 min-h-full min-w-full object-cover m-auto text-center"
                         alt={title}
                         src={image}
                         width={100}
                         height={100}
-                        quality={50}
+                        quality={75}
                     />
-
                 }
+            </Link>
+        </div>
 
-
-                <h2 className="text-white font-semibold text-xl">
-                    {title}
-                </h2>
-            </div>
-        </Link>
     )
 }
