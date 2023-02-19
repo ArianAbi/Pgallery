@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useUser, useSupabaseClient } from "@supabase/auth-helpers-react"
 import { MobileNav } from "@/components/MobileNav"
-import { Post } from "@/components/Post"
+import { DashboardPost } from "@/components/DashboardPost"
 
 const Dashboard = () => {
 
@@ -48,14 +48,14 @@ const Dashboard = () => {
             <div>
                 <h3 className="bg-stone-800 text-xl font-semibold text-white px-4 py-2">Posts</h3>
 
-                <div className="grid grid-cols-3 gap-2 p-2">
+                <div className="grid grid-cols-3 gap-1 p-2">
                     {posts?.map(post => {
                         return (
                             // <div className="bg-white text-black text-center w-full h-[110px] flex items-center justify-center 
                             // rounded-md shadow-md">
                             //     {post.title}
                             // </div>
-                            <Post image_path={post.image_path} title={post.title} creator_id={post.creator_id} date={post.date} id={post.id} key={post.id} />
+                            <DashboardPost image_path={post.image_path} title={post.title} creator_id={post.creator_id} date={post.date} id={post.id} key={post.id} />
                         )
                     })}
                 </div>
