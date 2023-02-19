@@ -12,9 +12,10 @@ export default function CreatePost() {
 
     const { username } = router.query;
 
-    const [title, setTitle] = useState("");
-
+    const [title, setTitle] = useState<string>();
+    const [description, setDescription] = useState<string>();
     const [file, setFile] = useState<File>();
+
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("");
 
@@ -23,8 +24,13 @@ export default function CreatePost() {
         setError("")
         setLoading(true)
 
-        if (title === "" || file === undefined || user === null) {
-            setError("please add title");
+        if (
+            title === "" ||
+            description === "" ||
+            file === undefined ||
+            user === null
+        ) {
+            setError("please fill all the fields");
             setLoading(false)
             return;
         }
@@ -38,15 +44,11 @@ export default function CreatePost() {
             console.log(error);
             setLoading(false)
             return
-        } else {
-            console.log(imageData);
         }
 
-        console.log(imageData);
-
-        //inset title
+        //inset post
         try {
-            await supabaseClient.from('posts').insert({ title: title, creator_id: user.id, image_path: imageData.path })
+            await supabaseClient.from('posts').insert({ title: title, creator_id: user.id, image_path: imageData.path, description: description })
         } catch (err) {
             console.log(err);
             setError(`${err}`);
@@ -75,6 +77,16 @@ export default function CreatePost() {
                         onChange={e => setTitle(e.target.value)}
                     />
 
+                    {/* description */}
+                    <input
+                        className="w-full py-2 px-3 rounded-md outline outline-1 outline-gray-400"
+                        type="text"
+                        placeholder="description"
+                        value={description}
+                        onChange={e => setDescription(e.target.value)}
+                    />
+
+                    {/* image input */}
                     <input
                         type="file"
                         accept=".png , .jpg"
