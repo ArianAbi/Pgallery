@@ -1,22 +1,26 @@
 import { useRouter } from "next/router"
 import { useSupabaseClient } from "@supabase/auth-helpers-react"
 import { useEffect, useState } from "react";
-import { Post } from "@/components/Post";
 import { MobileNav } from "@/components/MobileNav";
+import Image from "next/image";
+import dayjs from "dayjs";
 
-export default function ArtworkPost() {
+export default function PostPage() {
 
-    interface data {
+    type data = {
         creator_id: string,
         date: string,
         id: string,
-        title: string
+        title: string,
+        description: string,
+        image_path: string
     }
 
     const supabaseClient = useSupabaseClient();
     const router = useRouter();
 
-    const [post, setPost] = useState<data[]>()
+    const [post, setPost] = useState<data>()
+    const [imageUrl, setImageUrl] = useState<string>()
 
     const { id } = router.query
 
@@ -31,15 +35,39 @@ export default function ArtworkPost() {
                 return;
             }
 
-            console.log(data[0]);
+            const { data: _imageUrl } = await supabaseClient.storage.from('posts').getPublicUrl(data[0].image_path);
 
-            setPost(data)
+            setImageUrl(_imageUrl.publicUrl)
+
+            setPost(data[0])
         })()
     }, [id])
 
     return (
         <>
-            <h2 className="text-center text-white">{post && post[0].title}</h2>
+            <div className="text-white">
+                {/* image */}
+                {post && imageUrl &&
+
+                    <Image
+                        alt={post.description}
+                        src={imageUrl}
+                        width={200}
+                        height={200}
+                    />
+
+                }
+                {/* title */}
+                <h1>{post?.title}</h1>
+
+                {/* date */}
+                <span>{dayjs(post?.date).format('YY/MM/DD')}</span>
+
+                {/* description */}
+                <p>{post?.description}</p>
+
+
+            </div>
 
             <MobileNav />
         </>
