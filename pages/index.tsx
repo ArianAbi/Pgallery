@@ -46,7 +46,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="w-full grid grid-cols-2 text-center p-4 gap-2">
+      <div className="w-full grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-8 xl:grid-cols-10 text-center p-4 gap-2">
 
         {postJsx}
 
