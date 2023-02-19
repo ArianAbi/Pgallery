@@ -55,7 +55,7 @@ const Dashboard = () => {
                             // rounded-md shadow-md">
                             //     {post.title}
                             // </div>
-                            <Post title={post.title} creator_id={post.creator_id} date={post.date} id={post.id} />
+                            <Post image_path={post.image_path} title={post.title} creator_id={post.creator_id} date={post.date} id={post.id} key={post.id} />
                         )
                     })}
                 </div>
