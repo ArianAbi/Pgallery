@@ -82,7 +82,7 @@ export default function PostPage() {
                     {/* image */}
                     {post && imageUrl &&
                         <Image
-                            className="w-full max-h-[50vh] aspect-auto object-contain bg-stone-900"
+                            className="w-full max-h-[50vh] min-h-[300px] aspect-auto object-contain bg-stone-900"
                             placeholder="empty"
                             alt={post.description}
                             src={imageUrl}
