@@ -27,7 +27,7 @@ export const Header = () => {
             console.log("logged out");
             setLoggingOut(false)
             setDialogOpen(false)
-            router.reload();
+            router.replace('/');
         } catch (err) {
             console.log(err);
             setLoggingOut(false)
@@ -49,7 +49,7 @@ export const Header = () => {
 
                 {!user &&
                     <div className="text-right">
-                        <a href={loginRoute}>Account</a>
+                        <a href={loginRoute}>Login</a>
                     </div>
                 }
 
