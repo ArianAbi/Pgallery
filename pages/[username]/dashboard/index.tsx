@@ -35,20 +35,33 @@ const Dashboard = () => {
                 console.log(postErr);
                 return;
             }
-
             setPosts(postData)
         })()
     }, [user])
 
     return (
         <>
-            <h2>{username}</h2>
-            <div>Dashboard</div>
+
+            <div className="flex justify-between py-4 px-4 ">
+                <div className="flex gap-4 ">
+                    <div className="w-[70px] aspect-square bg-stone-100 rounded-full"></div>
+                    <h2 className="text-white mt-2 text-lg font-semibold">{username}</h2>
+                </div>
+
+                <div className="flex flex-col items-center justify-center text-white text-md pr-4">
+                    <span className="">{posts?.length}</span>
+                    <span className="">posts</span>
+                </div>
+            </div>
 
             <div>
                 <h3 className="bg-stone-800 text-xl font-semibold text-white px-4 py-2">Posts</h3>
 
                 <div className="grid grid-cols-3 gap-1 p-2">
+                    {posts?.length === 0 &&
+                        <div className="text-white col-span-full text-center mt-4 text-lg italic">No Posts Yet</div>
+                    }
+
                     {posts?.map(post => {
                         return (
                             // <div className="bg-white text-black text-center w-full h-[110px] flex items-center justify-center 
