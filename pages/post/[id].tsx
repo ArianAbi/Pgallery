@@ -47,7 +47,7 @@ export default function PostPage() {
             setPost(data[0])
             setLoading(false)
         })()
-    }, [id])
+    }, [id, supabaseClient])
 
     return (
         <>

@@ -18,7 +18,7 @@ export const MobileNav = () => {
 
             setUsername(username)
         })()
-    }, [])
+    }, [supabaseClient, user])
 
     return (
         <>

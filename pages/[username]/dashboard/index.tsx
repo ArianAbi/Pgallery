@@ -37,7 +37,7 @@ const Dashboard = () => {
             }
             setPosts(postData)
         })()
-    }, [user])
+    }, [user, supabaseClient])
 
     return (
         <>

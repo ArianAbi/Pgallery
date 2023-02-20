@@ -35,7 +35,7 @@ export const DashboardPost = ({ id, creator_id, title, date, image_path }: Post)
 
             setUsername(data && data[0].user_name)
         })()
-    }, [])
+    }, [creator_id, image_path, supabaseClient])
 
     const toggleDialog = () => {
         setDialogOpen(!dialogOpen)
