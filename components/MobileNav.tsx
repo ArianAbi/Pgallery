@@ -23,11 +23,11 @@ export const MobileNav = () => {
     return (
         <>
             <div className="fixed bottom-0 left-0 w-full text-center h-[70px] bg-slate-600 text-white font-semibold
-            grid grid-cols-3
+            grid grid-cols-3 divide-x-2 py-4 divide-stone-300
             ">
 
                 {/* home */}
-                <div className="bg-red-500 w-full h-full flex items-center justify-center">
+                <div className="w-full h-full flex items-center justify-center">
 
                     <Link href="/">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
@@ -39,7 +39,7 @@ export const MobileNav = () => {
                 </div>
 
                 {/* create */}
-                <div className="bg-green-500 w-full h-full flex items-center justify-center">
+                <div className="w-full h-full flex items-center justify-center">
 
                     <Link href={`/${username}/create`}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
@@ -51,7 +51,7 @@ export const MobileNav = () => {
                 </div>
 
                 {/* dashbord */}
-                <div className="bg-amber-500 w-full h-full flex items-center justify-center">
+                <div className="w-full h-full flex items-center justify-center">
 
                     <Link href={`/${username}/dashboard`}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
