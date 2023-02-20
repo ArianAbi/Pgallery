@@ -37,7 +37,7 @@ export const Post = ({ id, creator_id, title, date, image_path }: Post) => {
     return (
 
         <div
-            className="w-full bg-cover bg-center aspect-square flex flex-col justify-end items-center py-2 relative overflow-hidden z-10"
+            className="w-full bg-cover bg-center aspect-square flex flex-col justify-end items-center py-2 relative overflow-hidden z-10 bg-slate-600"
         >
 
             <Link href={`/post/${id}`}>
