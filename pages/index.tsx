@@ -9,6 +9,7 @@ export default function Home() {
   const userClient = useUser();
 
   const [postJsx, setPostJsx] = useState<JSX.Element[]>();
+  const [loadingJsx, setLoadingJsx] = useState<JSX.Element[]>();
   const [loading, setLoading] = useState(true);
 
   //fetch posts
@@ -36,20 +37,25 @@ export default function Home() {
 
       setPostJsx(renderdPosts)
       setLoading(false)
-
     })()
   }, [userClient])
 
   if (loading) {
-    return <div className="text-white">Loading...</div>
+    return (
+      <div className="w-full grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-8 xl:grid-cols-10 text-center p-4 gap-2">
+        {
+          Array.apply(null, Array(25)).map(() => {
+            return <div className="bg-slate-500 animate-pulse w-full aspect-square"></div>
+          })
+        }
+      </div>
+    )
   }
 
   return (
     <>
       <div className="w-full grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-8 xl:grid-cols-10 text-center p-4 gap-2">
-
         {postJsx}
-
       </div>
 
       {userClient &&
